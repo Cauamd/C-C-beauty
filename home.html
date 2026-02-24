@@ -1,3 +1,4 @@
+<!-- ...existing code... -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -11,17 +12,61 @@
     <h1>Página Inicial da C&C Beauty</h1>
 
     <h1>Agendar Horário:</h1>
-    <form action="agendamento.html" method="get">
+    <form id="formAgendamento">
+        <label for="nome">Nome completo:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="servico">Serviço:</label>
+        <input type="text" id="servico" name="servico" placeholder="Ex: Corte" required>
+
         <label for="data">Data:</label>
         <input type="date" id="data" name="data" required>
-        <br><br>
+
         <label for="hora">Hora:</label>
         <input type="time" id="hora" name="hora" required>
-        <br><br>
-        <a href="hora.html"><button type="submit">Agendar</button></a>
+
+        <button type="submit">Agendar</button>
+    </form>
+
+    <div id="msg" role="status" aria-live="polite" style="margin-top:12px;"></div>
     </div>
     <canvas id="hairCanvas"></canvas>
 <script src="index.js"></script>
 
+<script>
+document.getElementById('formAgendamento').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  const data = {
+    nome: e.target.nome.value.trim(),
+    email: e.target.email.value.trim(),
+    servico: e.target.servico.value.trim(),
+    data: e.target.data.value,
+    hora: e.target.hora.value
+  };
+  try {
+    const resp = await fetch('http://localhost:3000/api/agendamentos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const json = await resp.json();
+    if (resp.ok) {
+      document.getElementById('msg').textContent = 'Agendamento realizado. Um email de confirmação foi enviado.';
+      e.target.reset();
+    } else {
+      document.getElementById('msg').textContent = json.error || 'Erro ao agendar.';
+    }
+  } catch (err) {
+    document.getElementById('msg').textContent = 'Falha na conexão com o servidor.';
+  } finally {
+    btn.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
