@@ -1,3 +1,5 @@
+
+
 * {
     margin: 0;
     padding: 0;
@@ -92,4 +94,286 @@ button:hover {
 .links p {
     margin-top: 10px;
     color: #555;
+}
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fdff79, #43452f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.lo {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+.lo h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+.lo label {
+    font-size: 14px;
+    color: #555;
+}
+
+
+.lo input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+
+.lo input:focus {
+    outline: none;
+    border-color: #6a5acd;
+    box-shadow: 0 0 5px rgba(106, 90, 205, 0.5);
+}
+
+
+.lo button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #6a5acd;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+
+.lo button:hover {
+    background-color: #5a4cbf;
+    transform: scale(1.02);
+}
+
+
+.lo button:active {
+    transform: scale(0.98);
+}
+.pós {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+.pós h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+.pós label {
+    font-size: 14px;
+    color: #555;
+}
+
+
+.pós input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+
+.pós input:focus {
+    outline: none;
+    border-color: #6a5acd;
+    box-shadow: 0 0 5px rgba(106, 90, 205, 0.5);
+}
+
+
+.pós button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #6a5acd;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+
+.pós button:hover {
+    background-color: #5a4cbf;
+    transform: scale(1.02);
+}
+
+
+.pós button:active {
+    transform: scale(0.98);
+}
+
+
+
+.home {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+.home h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+.home label {
+    font-size: 14px;
+    color: #555;
+}
+
+
+.home input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+
+.home input:focus {
+    outline: none;
+    border-color: #6a5acd;
+    box-shadow: 0 0 5px rgba(106, 90, 205, 0.5);
+}
+
+
+.home button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #6a5acd;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+
+.home button:hover {
+    background-color: #5a4cbf;
+    transform: scale(1.02);
+}
+
+.home button:active {
+    transform: scale(0.98);
+}
+
+.we {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+.we h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+.we label {
+    font-size: 14px;
+    color: #555;
+}
+
+
+.we input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+
+.we input:focus {
+    outline: none;
+    border-color: #6a5acd;
+    box-shadow: 0 0 5px rgba(106, 90, 205, 0.5);
+}
+
+
+.we button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #6a5acd;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+
+.we button:hover {
+    background-color: #5a4cbf;
+    transform: scale(1.02);
+}
+
+
+.we button:active {
+    transform: scale(0.98);
+}
+
+#hairCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1; /* fica no fundo */
+    width: 100%;
+    height: 100%;
+    background: #0f0f1a;
 }
