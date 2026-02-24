@@ -3,22 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página</title>
+    <title>Login | Studio de Beleza</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1><strong>Bem vindo(a)!</strong></h2>
-    <p>faça seu login </p>
-
-    <input type="email" id="email" name="email" placeholder="Digite seu email...">
-    <br><br>
-    <input type="password" id="senha" name="senha" placeholder="Digite sua senha...">
-    <br><br>
-    <input type="password" id="senha" name="senha" placeholder="Confirme sua senha...">
-        <br><br>
-    <button type="submit">login</button>
     
-    <p>esqueceu a senha?</p><a href="link da página de cadastro"></a>
+    <div class="login-card">
+        <h1>Bem vindo(a)!</h1>
+        <p class="subtitle">Faça seu login para agendar seu momento</p>
 
-    <p>Ainda não possui uma conta?</p> <a href="link da página de cadastro"></a>
+        <form>
+            <input type="email" id="email" name="email" placeholder="Digite seu email...">
+            <input type="password" id="senha" name="senha" placeholder="Digite sua senha...">
+            <input type="password" id="confirma-senha" name="senha" placeholder="Confirme sua senha...">
+            
+            <button type="submit">Entrar</button>
+        </form>
+        
+        <div class="links">
+            <a href="#">Esqueceu a senha?</a>
+            <p>Ainda não possui uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+        </div>
+    </div>
+
 </body>
 </html>
