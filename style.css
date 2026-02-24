@@ -1,288 +1,162 @@
 
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+:root{
+  --bg:#f4f6fb;
+  --card:#ffffff;
+  --primary:#6b5bff;
+  --muted:#6b7280;
+  --accent:#0f1724;
+  --shadow: 0 8px 30px rgba(15,23,42,0.06);
+  --radius:10px;
+  --maxw:980px;
 }
 
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter, system-ui, Arial, Helvetica, sans-serif;}
 
-body {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #fdff79, #43452f);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+body{
+  background: linear-gradient(180deg,#f7fafc, #eef2ff);
+  color:var(--accent);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:28px;
 }
 
-
-.lo {
-    background-color: #ffffff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+/* layout */
+.site{
+  width:100%;
+  max-width:var(--maxw);
 }
 
+/* header / nav */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:20px;
+}
+.brand{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  text-decoration:none;
+  color:var(--accent);
+}
+.brand .logo{
+  width:44px;height:44px;border-radius:8px;
+  background:linear-gradient(135deg,var(--primary),#4a3cff);
+  display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+  box-shadow: var(--shadow);
+}
+.nav{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.nav a{
+  text-decoration:none;
+  color:var(--muted);
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:600;
+  font-size:14px;
+}
+.nav a:hover{ background:rgba(107,91,255,0.08); color:var(--primary); }
 
-.lo h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
+/* card */
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadow);
 }
 
+/* forms */
+.form-row{display:flex;gap:12px}
+.form-col{flex:1}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;}
+input,select,textarea,button{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid #e6e9ef;
+  border-radius:8px;
+  font-size:14px;
+  background:transparent;
+}
+input:focus,select:focus,textarea:focus{ outline:none; box-shadow:0 6px 20px rgba(107,91,255,0.08); border-color:var(--primary); }
 
-.lo label {
-    font-size: 14px;
-    color: #555;
+.btn{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+}
+.btn.secondary{
+  background:#fff;
+  border:1px solid #e6e9ef;
+  color:var(--accent);
 }
 
+/* utility */
+.h1{ font-size:20px; margin-bottom:6px; font-weight:700; color:var(--accent); }
+.lead{ color:var(--muted); margin-bottom:12px; font-size:14px; }
 
-.lo input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s, box-shadow 0.3s;
+/* responsive */
+@media (max-width:720px){
+  .form-row{ flex-direction:column; }
+  .nav{ display:none; }
+  .header{ align-items:flex-start; gap:8px; flex-direction:column; }
 }
 
+/* background canvas fallback */
+#hairCanvas{ position:fixed; inset:0; z-index:-1; background:linear-gradient(180deg,#f7fafc,#eef2ff); }
+  
 
-.lo input:focus {
-    outline: none;
-    border-color: #6a5acd;
-    box-shadow: 0 0 5px rgba(106, 90, 205, 0.5);
+/* CSS-only page transition (entrance) */
+@media (prefers-reduced-motion: no-preference) {
+  body {
+    /* entrance animation on page load gives impression of transition between pages */
+    animation: pageIn .36s cubic-bezier(.2,.9,.2,1) both;
+    will-change: opacity, transform;
+  }
+
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(8px) scale(.998); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
 }
 
-
-.lo button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-    background-color: #6a5acd;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+/* immediate click feedback for links and buttons (pure CSS) */
+.nav a,
+.btn,
+.btn.secondary {
+  transition: transform .12s ease, opacity .12s ease, box-shadow .12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav a:active,
+.btn:active,
+.btn.secondary:active {
+  transform: translateY(2px) scale(.998);
+  opacity: 0.96;
+  box-shadow: 0 4px 18px rgba(2,6,23,0.06);
 }
 
-
-.lo button:hover {
-    background-color: #5a4cbf;
-    transform: scale(1.02);
+/* optional: small fade-out visual while browser navigates (visible short moment on click) */
+a:focus::after,
+a:active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: rgba(107,91,255,0.04);
+  pointer-events: none;
 }
 
-
-.lo button:active {
-    transform: scale(0.98);
-}
-.pós {
-    background-color: #ffffff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-
-.pós h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-
-.pós label {
-    font-size: 14px;
-    color: #555;
-}
-
-
-.pós input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-
-.pós input:focus {
-    outline: none;
-    border-color: #6a5acd;
-    box-shadow: 0 0 5px rgba(106, 90, 205, 0.5);
-}
-
-
-.pós button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-    background-color: #6a5acd;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-
-.pós button:hover {
-    background-color: #5a4cbf;
-    transform: scale(1.02);
-}
-
-
-.pós button:active {
-    transform: scale(0.98);
-}
-
-
-
-.home {
-    background-color: #ffffff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-
-.home h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-
-.home label {
-    font-size: 14px;
-    color: #555;
-}
-
-
-.home input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-
-.home input:focus {
-    outline: none;
-    border-color: #6a5acd;
-    box-shadow: 0 0 5px rgba(106, 90, 205, 0.5);
-}
-
-
-.home button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-    background-color: #6a5acd;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-
-.home button:hover {
-    background-color: #5a4cbf;
-    transform: scale(1.02);
-}
-
-.home button:active {
-    transform: scale(0.98);
-}
-
-.we {
-    background-color: #ffffff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-
-.we h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-
-.we label {
-    font-size: 14px;
-    color: #555;
-}
-
-
-.we input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-
-.we input:focus {
-    outline: none;
-    border-color: #6a5acd;
-    box-shadow: 0 0 5px rgba(106, 90, 205, 0.5);
-}
-
-
-.we button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-    background-color: #6a5acd;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-
-.we button:hover {
-    background-color: #5a4cbf;
-    transform: scale(1.02);
-}
-
-
-.we button:active {
-    transform: scale(0.98);
-}
-
-#hairCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1; /* fica no fundo */
-    width: 100%;
-    height: 100%;
-    background: #0f0f1a;
+/* keep reduced motion respectful */
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none !important; }
+  .nav a, .btn, .btn.secondary { transition: none !important; transform: none !important; }
 }

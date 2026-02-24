@@ -1,35 +1,71 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C&C Beauty</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>C&C Beauty — Cadastro</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-        <div class="lo">
-        <h1>Faça seu cadastro</h1>
-<br>
-        <label for="nome">Seu nome</label>
-        <br>
-        <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
-<br><br>
-        <label for="email">Seu email</label>
-        <br>
-        <input type="email" id="email" name="email" placeholder="Digite seu email" required>
-<br><br>
-        <label for="senha">Sua senha</label>
-        <br>
-        <input type="password" id="senha" name="senha" placeholder="***************" required>
-<br>
-<br>
-        <a href="pós cadastro.html"><button type="submit">Cadastrar</button></a>
+  <div class="site">
+    <header class="header">
+      <a class="brand" href="home.html">
+        <div class="logo">C&C</div>
+        <div><div style="font-weight:800">C&amp;C Beauty</div><div style="font-size:12px;color:var(--muted)">Cadastro</div></div>
+      </a>
+    </header>
+
+    <main class="card">
+      <h1 class="h1">Faça seu cadastro</h1>
+      <p class="lead">Crie uma conta para acompanhar seus agendamentos.</p>
+
+      <form id="formCadastro" novalidate>
+        <label for="nome">Nome completo</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="email" style="margin-top:8px">E‑mail</label>
+        <input type="email" id="email" name="email" required>
+
+        <div class="form-row" style="margin-top:8px">
+          <div class="form-col">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required minlength="6">
+          </div>
+          <div class="form-col">
+            <label for="senha2">Confirmar senha</label>
+            <input type="password" id="senha2" name="senha2" required minlength="6">
+          </div>
         </div>
-        <canvas id="hairCanvas"></canvas>
-<script src="index.js"></script>
-<div id="trail-container"></div>
 
+        <a href="home.html"><button class="btn" type="submit" style="margin-top:12px">Cadastrar</button></a>
+      </form>
+    </main>
+  </div>
 
+  <canvas id="hairCanvas"></canvas>
+  <script src="index.js"></script>
 
+    <script>
+
+    (function(){
+      const form = document.getElementById('formCadastro');
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        // validações HTML padrão
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        const senha = form.senha.value;
+        const senha2 = form.senha2.value;
+        if (senha !== senha2) {
+          alert('As senhas não coincidem.');
+          return;
+        }
+        location.href = 'home.html';
+      });
+    })();
+  </script>
 </body>
 </html>

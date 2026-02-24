@@ -1,72 +1,168 @@
-<!-- ...existing code... -->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C&C Beauty</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>C&C Beauty — Home</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* animação de confirmação */
+    .booking-anim{
+      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+      background:rgba(15,23,42,0.35); z-index:60; opacity:0; pointer-events:none;
+      transition:opacity .25s ease;
+    }
+    .booking-anim.show{ opacity:1; pointer-events:auto; }
+    .booking-card{
+      width:320px; max-width:90%; background:#fff; border-radius:12px; padding:18px;
+      text-align:center; box-shadow:0 12px 40px rgba(2,6,23,0.18);
+      transform:scale(.85); animation:pop .36s cubic-bezier(.2,.85,.3,1) forwards;
+    }
+    @keyframes pop{ to{ transform:scale(1);} }
+
+    .check{
+      width:72px;height:72px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+      background:#10b981;color:#fff;font-size:32px;margin:0 auto 12px; box-shadow:0 8px 30px rgba(16,185,129,0.18);
+    }
+    .booking-card h3{ margin:0 0 6px 0; font-size:18px; color:var(--accent); }
+    .booking-card p{ margin:0;color:var(--muted); font-size:14px; }
+
+    /* confete */
+    .confetti{ position:absolute; inset:0; pointer-events:none; overflow:hidden; border-radius:12px; }
+    .confetti span{
+      position:absolute; width:10px; height:14px; border-radius:2px; opacity:0.95;
+      transform-origin:center; animation:confetti-fall 1000ms linear forwards;
+    }
+    @keyframes confetti-fall{
+      0%{ transform: translateY(-10vh) rotate(0) scaleY(1); opacity:1; }
+      100%{ transform: translateY(46vh) rotate(720deg) scaleY(0.8); opacity:0; }
+    }
+  </style>
 </head>
 <body>
-    <div class="home">
-    <h1>Página Inicial da C&C Beauty</h1>
+  <div class="site">
+    <header class="header">
+      <a class="brand" href="home.html">
+        <div class="logo">C&C</div>
+        <div>
+          <div style="font-weight:800">C&amp;C Beauty</div>
+          <div style="font-size:12px;color:var(--muted)">Beleza e bem‑estar</div>
+        </div>
+      </a>
 
-    <h1>Agendar Horário:</h1>
-    <form id="formAgendamento">
-        <label for="nome">Nome completo:</label>
-        <input type="text" id="nome" name="nome" required>
+      <nav class="nav" aria-label="Menu principal">
+        <a href="home.html">Home</a>
+        <a href="agendamento.html">Agendar</a>
+      </nav>
+    </header>
 
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" required>
+    <main class="card" role="main">
+      <h1 class="h1">Agende seu horário</h1>
+      <p class="lead">Escolha a data e hora. Enviaremos confirmação ao finalizar.</p>
 
-        <label for="servico">Serviço:</label>
-        <input type="text" id="servico" name="servico" placeholder="Ex: Corte" required>
+      <!-- removed native GET submit; now JS saves no localStorage and redireciona -->
+      <form id="formAgendamento" style="margin-top:12px">
+        <div class="form-row">
+          <div class="form-col">
+            <label for="data">Data</label>
+            <input type="date" id="data" name="data" required>
+          </div>
+          <div class="form-col">
+            <label for="hora">Hora</label>
+            <input type="time" id="hora" name="hora" required>
+          </div>
+        </div>
 
-        <label for="data">Data:</label>
-        <input type="date" id="data" name="data" required>
+        <label for="servico" style="margin-top:12px">Serviço</label>
+        <select id="servico" name="servico" required>
+          <option value="">Selecione</option>
+          <option>Corte e escova</option>
+          <option>Manicure</option>
+          <option>Coloração</option>
+        </select>
 
-        <label for="hora">Hora:</label>
-        <input type="time" id="hora" name="hora" required>
+        <button class="btn" type="submit" style="margin-top:14px">Agendar</button>
+      </form>
+    </main>
+  </div>
 
-        <button type="submit">Agendar</button>
-    </form>
+  <canvas id="hairCanvas"></canvas>
 
-    <div id="msg" role="status" aria-live="polite" style="margin-top:12px;"></div>
+  <!-- overlay de animação -->
+  <div id="bookingAnim" class="booking-anim" aria-hidden="true">
+    <div class="booking-card" role="status" aria-live="polite">
+      <div class="check">✓</div>
+      <h3>Agendamento concluído</h3>
+      <p>Seu horário foi salvo com sucesso.</p>
+      <div class="confetti" id="confetti"></div>
     </div>
-    <canvas id="hairCanvas"></canvas>
-<script src="index.js"></script>
+  </div>
 
-<script>
-document.getElementById('formAgendamento').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = e.target.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  const data = {
-    nome: e.target.nome.value.trim(),
-    email: e.target.email.value.trim(),
-    servico: e.target.servico.value.trim(),
-    data: e.target.data.value,
-    hora: e.target.hora.value
-  };
-  try {
-    const resp = await fetch('http://localhost:3000/api/agendamentos', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    const json = await resp.json();
-    if (resp.ok) {
-      document.getElementById('msg').textContent = 'Agendamento realizado. Um email de confirmação foi enviado.';
-      e.target.reset();
-    } else {
-      document.getElementById('msg').textContent = json.error || 'Erro ao agendar.';
-    }
-  } catch (err) {
-    document.getElementById('msg').textContent = 'Falha na conexão com o servidor.';
-  } finally {
-    btn.disabled = false;
-  }
-});
-</script>
+  <script src="index.js"></script>
+
+  <script>
+    (function(){
+      const form = document.getElementById('formAgendamento');
+      const STORAGE_KEY = 'agendamentos';
+      const overlay = document.getElementById('bookingAnim');
+      const confettiEl = document.getElementById('confetti');
+
+      function load() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+        catch { return []; }
+      }
+      function save(list) { localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+
+      function showAnimation(duration = 1400){
+        overlay.classList.add('show');
+        overlay.setAttribute('aria-hidden','false');
+        // criar confete simples
+        confettiEl.innerHTML = '';
+        const colors = ['#6b5bff','#ff7ab6','#ffd166','#7ee787','#4ade80'];
+        for (let i=0;i<18;i++){
+          const s = document.createElement('span');
+          s.style.left = (10 + Math.random()*80) + '%';
+          s.style.top = (-5 - Math.random()*10) + 'vh';
+          s.style.background = colors[Math.floor(Math.random()*colors.length)];
+          s.style.transform = `rotate(${Math.random()*360}deg)`;
+          s.style.animationDelay = (Math.random()*200) + 'ms';
+          s.style.width = (8 + Math.random()*8) + 'px';
+          s.style.height = (10 + Math.random()*10) + 'px';
+          confettiEl.appendChild(s);
+        }
+
+        return new Promise(res => setTimeout(()=> {
+          overlay.classList.remove('show');
+          overlay.setAttribute('aria-hidden','true');
+          res();
+        }, duration));
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = form.data.value;
+        const hora = form.hora.value;
+        const servico = form.servico.value.trim();
+
+        if (!data || !hora || !servico) {
+          alert('Preencha data, hora e serviço.');
+          return;
+        }
+
+        const id = 'a' + Date.now().toString(36);
+        const item = { id, data, hora, servico, createdAt: new Date().toISOString() };
+
+        const list = load();
+        list.push(item);
+        save(list);
+
+        // animação e depois redireciona para a página de confirmação
+        await showAnimation(1400);
+        location.href = `agendamento.html?id=${encodeURIComponent(id)}`;
+      });
+    })();
+  </script>
 </body>
 </html>

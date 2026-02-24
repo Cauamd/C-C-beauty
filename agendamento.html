@@ -1,19 +1,95 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C&C Beauty</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>C&C Beauty — Agendamento</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .details{ margin-top:8px; font-size:15px; }
+    .list{ margin-top:12px; border-top:1px solid #f0f2f7; padding-top:12px; }
+    .item{ padding:8px 0; border-bottom:1px dashed #f3f4f6; }
+  </style>
 </head>
 <body>
-    <div class="we">
-        <h1>Horário Agendado</h1>
-        <p>Seu horário foi agendado com sucesso!</p>
-        <a href="home.html"><button>Voltar à página inicial</button></a>
-    </div>
-    <canvas id="hairCanvas"></canvas>
-<script src="index.js"></script>
+  <div class="site">
+    <header class="header">
+      <a class="brand" href="home.html">
+        <div class="logo">C&C</div>
+        <div><div style="font-weight:800">C&amp;C Beauty</div><div style="font-size:12px;color:var(--muted)">Agendamento</div></div>
+      </a>
+      <nav class="nav" aria-label="Menu principal">
+        <a href="home.html">Home</a>
+        <a href="agendamento.html">Agendar</a>
+      </nav>
+    </header>
 
+    <main class="card">
+      <h1 class="h1">Horário agendado</h1>
+      <p id="lead" class="lead">Seu horário foi agendado com sucesso! Verifique seus agendamentos abaixo.</p>
+
+      <div id="confirmation" class="details" aria-live="polite"></div>
+
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <a href="home.html"><button class="btn secondary">Voltar</button></a>
+        <button id="btnVerTodos" class="btn">Ver todos</button>
+      </div>
+
+      <div id="allList" class="list" style="display:none"></div>
+    </main>
+  </div>
+
+  <canvas id="hairCanvas"></canvas>
+  <script src="index.js"></script>
+
+  <script>
+    (function(){
+      const STORAGE_KEY = 'agendamentos';
+      function load(){ try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; } }
+
+      function qs(name){
+        const u = new URL(location.href);
+        return u.searchParams.get(name);
+      }
+
+      function formatDate(d){
+        try { return new Date(d).toLocaleDateString('pt-BR'); } catch { return d; }
+      }
+
+      const id = qs('id');
+      const list = load();
+      const target = list.find(x => x.id === id);
+
+      const confirmation = document.getElementById('confirmation');
+      if (target) {
+        confirmation.innerHTML = `
+          <strong>Serviço:</strong> ${escapeHtml(target.servico)}<br>
+          <strong>Data:</strong> ${formatDate(target.data)} <strong>às</strong> ${escapeHtml(target.hora)}<br>
+          <small style="color:var(--muted)">Agendado em: ${formatDate(target.createdAt)}</small>
+        `;
+      } else {
+        confirmation.textContent = 'Agendamento registrado. Você pode ver todos os agendamentos clicando em "Ver todos".';
+      }
+
+      document.getElementById('btnVerTodos').addEventListener('click', () => {
+        const container = document.getElementById('allList');
+        const items = load().slice().sort((a,b) => a.data.localeCompare(b.data) || a.hora.localeCompare(b.hora));
+        if (!items.length) {
+          container.innerHTML = '<div class="item">Nenhum agendamento salvo.</div>';
+        } else {
+          container.innerHTML = items.map(it => `
+            <div class="item">
+              <strong>${escapeHtml(it.servico)}</strong> — ${formatDate(it.data)} às ${escapeHtml(it.hora)}
+              <div style="font-size:13px;color:var(--muted)">id: ${escapeHtml(it.id)}</div>
+            </div>
+          `).join('');
+        }
+        container.style.display = container.style.display === 'none' ? 'block' : 'none';
+      });
+
+      function escapeHtml(s){ return (s||'').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
+    })();
+  </script>
 </body>
 </html>
