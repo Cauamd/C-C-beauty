@@ -1,24 +1,23 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página</title>
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1><strong>Bem vindo(a)!</strong></h2>
-    <p>faça seu login </p>
+    <section id="login" class="page">
+        <div class="auth-container">
+            <h2 class="section-title">Bem-vinda/o de volta</h2>
+            <form id="form-login" class="luxury-form">
+                <input type="email" id="login-email" placeholder="E-mail" required>
+                <input type="password" id="login-password" placeholder="Senha" required>
+               <button type="submit" class="btn-primary"><a href="index.html">Entrar</a></button>
+                <p class="auth-switch">Não tem conta? <a href="cadastro.html" onclick="navigateTo('register')">Cadastre-se aqui</a></p>
+            </form>
+        </div>
+    </section>
 
-    <input type="email" id="email" name="email" placeholder="Digite seu email...">
-    <br>
-    <input type="password" id="senha" name="senha" placeholder="Digite sua senha...">
-    <br>
-    <input type="password" id="senha" name="senha" placeholder="Confirme sua senha...">
- 
-    <button type="submit">login</button>
-    
-    <p>esqueceu a senha?</p><a href="link da página de cadastro"></a>
-
-    <p>Ainda não possui uma conta?</p> <a href="link da página de cadastro"></a>
 </body>
 </html>

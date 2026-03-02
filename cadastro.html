@@ -4,25 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<form>
-        <h1>Faça seu cadastro</h1>
-<br>
-        <label for="nome">Seu nome</label>
-        <br>
-        <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
-<br>
-        <label for="email">Seu email</label>
-        <br>
-        <input type="email" id="email" name="email" placeholder="Digite seu email" required>
-<br>
-        <label for="senha">Sua senha</label>
-        <br>
-        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
-<br>
-<br>
-        <button type="submit">Cadastrar</button>
-    </form>
+        <section id="register" class="page">
+                <div class="auth-container">
+                    <h2 class="section-title">Criar Conta</h2>
+                    <form id="form-register" class="luxury-form">
+                        <input type="text" id="reg-name" placeholder="Nome Completo" required>
+                        <input type="email" id="reg-email" placeholder="E-mail" required>
+                        <input type="password" id="reg-password" placeholder="Senha" required>
+                        <button type="submit" class="btn-primary"><a href="index.html">Criar Conta</a></button>
+                        <p class="auth-switch">Já tem conta? <a href="login.html" onclick="navigateTo('login')">Fazer Login</a></p>
+                    </form>
+                </div>
+            </section>
+            <script src="script.js"></script>
 </body>
 </html>
